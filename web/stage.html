@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>数字人舞台</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="stage.css?v=0.8.0" />
+</head>
+<body>
+  <div class="viewport" id="viewport">
+    <div class="stage" id="stage">
+      <img class="bg" id="bg" alt="" aria-hidden="true" />
+      <video class="srcvideo" id="srcvideo" muted playsinline loop></video>
+      <div class="vignette"></div>
+      <div class="aurora"></div>
+
+      <div class="topline">
+        <div class="identity">
+          <span class="live-dot"></span>
+          <strong id="name">小若</strong>
+          <span class="badge" id="badge">AI 数字人</span>
+        </div>
+        <span class="clock" id="clock">00:00</span>
+      </div>
+
+      <div class="avatar-wrap" id="avatar-wrap">
+        <img class="av-base" id="av-base" alt="" />
+        <img class="av-mouth" id="av-mouth" alt="" />
+        <div class="rim"></div>
+      </div>
+
+      <div class="subtitle" id="subtitle"><span id="subtitle-text"></span></div>
+      <div class="ticker" id="ticker"><span id="ticker-text"></span></div>
+
+      <div class="gate" id="gate">
+        <button type="button" class="gate-btn" id="gate-btn">🔊 点一下启用声音</button>
+        <p id="gate-hint">直播伴侣采集网页声音前，需要一次点击授权</p>
+      </div>
+
+      <div class="standby" id="standby">等待开播</div>
+    </div>
+  </div>
+  <script type="module" src="stage.mjs?v=0.8.0"></script>
+</body>
+</html>

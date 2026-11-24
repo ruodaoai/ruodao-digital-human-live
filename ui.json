@@ -1,0 +1,75 @@
+{
+  "route": "digital-human-live",
+  "label": "数字人直播",
+  "description": "传一张照片就开播：真人/卡通数字人、口型与动作、1080×1920 竖屏舞台、AI 话术轮播与本地语音合成字幕。支持 RTMP/SRT 推流或 OBS 浏览器源；数字人 Agent 可一对多直播、一对一排队接待、一对多轮流接待，并接入若道模型。",
+  "icon": "UserRound",
+  "version": "0.9.0",
+  "author": "Ruodao",
+  "mode": "web",
+  "entry": "web/index.html",
+  "permissions": [
+    "storage",
+    "process",
+    "network",
+    "clipboard"
+  ],
+  "window": {
+    "width": 1360,
+    "height": 900,
+    "title": "数字人直播"
+  },
+  "configFields": [
+    {
+      "key": "RUODAO_DH_ENGINE",
+      "label": "渲染引擎（still=零依赖静态真人 / local=本地开源口型）",
+      "placeholder": "still",
+      "secret": false
+    },
+    {
+      "key": "RUODAO_DH_ENGINE_URL",
+      "label": "本地开源引擎地址",
+      "placeholder": "http://127.0.0.1:8090",
+      "secret": false
+    },
+    {
+      "key": "RUODAO_DH_TTS_VOICE",
+      "label": "默认音色（edge-tts 音色名）",
+      "placeholder": "zh-CN-XiaoxiaoNeural",
+      "secret": false
+    }
+  ],
+  "capabilities": [
+    "storage",
+    "local-service",
+    "digital-human",
+    "photo-avatar",
+    "cartoon-avatar",
+    "local-tts",
+    "ai-script",
+    "live-overlay",
+    "obs-browser-source",
+    "browser-source",
+    "rtmp-push",
+    "web-widget",
+    "local-render-engine",
+    "sse-stream",
+    "agent-chat",
+    "visitor-queue",
+    "ruodao-model"
+  ],
+  "tags": [
+    "数字人",
+    "直播",
+    "AI主播",
+    "卡通数字人",
+    "推流",
+    "RTMP",
+    "网页接待",
+    "本地开源",
+    "MuseTalk",
+    "Wav2Lip",
+    "直播伴侣",
+    "OBS",
+    "语音合成"
+  ]
+}

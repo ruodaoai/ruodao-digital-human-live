@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>数字人直播</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="style.css?v=0.9.0" />
+</head>
+<body>
+  <div class="app" id="app" data-boot="loading">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>数字人直播</h1>
+          <p><span id="version">v0.9.0</span><span class="dot">·</span><span id="mode-label">正在连接本地服务</span></p>
+        </div>
+      </div>
+      <div class="top-status">
+        <span class="pill" id="svc-pill"><i></i><span>连接中</span></span>
+        <span class="pill neutral" id="tts-pill">语音检测中</span>
+        <span class="pill neutral" id="save-pill" title="配置会自动保存到本机">已保存</span>
+        <span class="pill live" id="live-pill" hidden>LIVE</span>
+      </div>
+      <div class="top-actions">
+        <button type="button" class="btn ghost" id="retry-connect" hidden>重试连接</button>
+        <button type="button" class="btn ghost" id="copy-source">复制浏览器源</button>
+        <button type="button" class="btn ghost" id="open-stage">打开舞台</button>
+        <button type="button" class="btn primary" id="go-live">一键开播</button>
+      </div>
+    </header>
+
+    <!-- 开播流程：四步引导，状态实时刷新，点击直达对应操作 -->
+    <nav class="steps" id="flow-steps" aria-label="开播流程">
+      <button type="button" class="step" data-step="persona" data-target-tab="host">
+        <i>1</i><div><b>上传形象</b><span id="step-persona">还没上传照片</span></div>
+      </button>
+      <span class="step-arrow" aria-hidden="true"></span>
+      <button type="button" class="step" data-step="voice" data-target-tab="host">
+        <i>2</i><div><b>选择声音</b><span id="step-voice">检测中</span></div>
+      </button>
+      <span class="step-arrow" aria-hidden="true"></span>
+      <button type="button" class="step" data-step="script" data-target-tab="script">
+        <i>3</i><div><b>准备话术</b><span id="step-script">0 句</span></div>
+      </button>
+      <span class="step-arrow" aria-hidden="true"></span>
+      <button type="button" class="step" data-step="live" data-target-tab="live">
+        <i>4</i><div><b>开播</b><span id="step-live">浏览器源 / 推流</span></div>
+      </button>
+    </nav>
+
+    <main class="workspace">
+      <aside class="col personas">
+        <div class="col-head">
+          <h2>我的形象</h2>
+          <span id="persona-count" class="muted">0</span>
+        </div>
+        <div class="seg" id="kind-seg">
+          <button type="button" class="seg-btn active" data-kind="real">真人形象</button>
+          <button type="button" class="seg-btn" data-kind="cartoon">卡通 / 二次元</button>
+        </div>
+        <label class="upload" id="upload-zone">
+          <input type="file" id="avatar-file" accept="image/png,image/jpeg,image/webp" hidden />
+          <span class="upload-icon">＋</span>
+          <strong>上传一张人像照片</strong>
+          <small>正脸、光线均匀、纯色背景最佳<br />PNG / JPG / WebP，≤ 12MB</small>
+        </label>
+        <div class="persona-list" id="persona-list"></div>
+        <p class="hint">照片只保存在本机，不上传任何服务器。</p>
+      </aside>
+
+      <section class="col preview">
+        <div class="col-head">
+          <h2>实时舞台</h2>
+          <span class="muted" id="stage-size-label">1080 × 1920</span>
+        </div>
+        <div class="preview-body">
+          <div class="phone" id="phone">
+            <div class="phone-notch"></div>
+            <img class="phone-fallback" id="phone-fallback" alt="数字人形象预览" hidden />
+            <iframe id="stage-frame" title="数字人舞台预览" allow="autoplay; fullscreen" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+            <div class="phone-error" id="phone-error" hidden>舞台预览加载较慢，已显示静态形象。点「刷新」重试。</div>
+            <div class="phone-empty" id="phone-empty">
+              <span>🖼️</span>
+              <p>先上传一张人像照片<br />舞台会自动生成</p>
+              <em>支持 PNG / JPG / WebP</em>
+            </div>
+            <div class="phone-loading" id="phone-loading" hidden><i></i><span>正在生成舞台…</span></div>
+          </div>
+          <aside class="stage-side" aria-label="开播检查">
+            <div class="side-title">开播检查</div>
+            <div class="check" id="check-persona"><i></i><span>数字人形象</span><b>未上传</b></div>
+            <div class="check" id="check-voice"><i></i><span>语音合成</span><b>检测中</b></div>
+            <div class="check" id="check-script"><i></i><span>直播话术</span><b>0 句</b></div>
+            <div class="check" id="check-stream"><i></i><span>推流</span><b>网页源</b></div>
+            <div class="check" id="check-widget"><i></i><span>网页接待</span><b>未启用</b></div>
+            <div class="side-tip" id="side-tip">上传一张正脸照片即可开播，其余配置会自动保存。</div>
+          </aside>
+        </div>
+        <div class="preview-tools">
+          <button type="button" class="btn ghost small" id="test-speak" title="Ctrl + Enter">试一句</button>
+          <button type="button" class="btn ghost small" id="stop-speak">停止说话</button>
+          <span class="muted" id="cue-label">待机</span>
+          <button type="button" class="btn ghost small" id="refresh-stage" title="重新加载舞台">刷新</button>
+        </div>
+      </section>
+
+      <aside class="col settings">
+        <div class="col-head">
+          <h2>主播设定</h2>
+          <span class="muted">自动保存</span>
+        </div>
+        <nav class="tab-nav" id="tab-nav" aria-label="主播设定分区">
+          <button type="button" data-tab="host" class="active">🎙️ 主播</button>
+          <button type="button" data-tab="stage">🎨 画面</button>
+          <button type="button" data-tab="motion">🕺 动作</button>
+          <button type="button" data-tab="stream">📡 推流</button>
+          <button type="button" data-tab="widget">💬 接待</button>
+          <button type="button" data-tab="engine">⚙️ 引擎</button>
+        </nav>
+
+        <div class="tab-panels" id="tab-panels">
+          <!-- ── 主播：形象信息 + 声音 ── -->
+          <section class="tab-panel active" data-tab="host">
+            <div class="card">
+              <h3>形象信息</h3>
+              <label class="field">
+                <span>形象适配</span>
+                <select id="p-fit">
+                  <option value="auto">智能（横图完整显示 / 竖图铺满）</option>
+                  <option value="contain">完整显示（不裁切）</option>
+                  <option value="cover">铺满画面（会裁切）</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>主播名字</span>
+                <input id="p-name" type="text" maxlength="24" placeholder="小若" />
+              </label>
+              <label class="field">
+                <span>一句话介绍</span>
+                <textarea id="p-bio" rows="2" maxlength="200" placeholder="24 小时在线的数字人直播间"></textarea>
+              </label>
+            </div>
+            <div class="card">
+              <h3>声音</h3>
+              <label class="field">
+                <span>音色</span>
+                <select id="p-voice"></select>
+              </label>
+              <div class="field-row">
+                <label class="field">
+                  <span>语速 <b id="rate-val">0</b></span>
+                  <input id="p-rate" type="range" min="-50" max="50" step="5" />
+                </label>
+                <label class="field">
+                  <span>音调 <b id="pitch-val">0</b></span>
+                  <input id="p-pitch" type="range" min="-50" max="50" step="5" />
+                </label>
+              </div>
+              <p class="hint" id="tts-hint"></p>
+              <button type="button" class="btn ghost small" id="tts-install" hidden>一键安装语音（edge-tts）</button>
+            </div>
+          </section>
+
+          <!-- ── 画面 ── -->
+          <section class="tab-panel" data-tab="stage">
+            <div class="card">
+              <h3>颜色</h3>
+              <div class="field-row">
+                <label class="field">
+                  <span>主题色</span>
+                  <input id="s-accent" type="color" />
+                </label>
+                <label class="field">
+                  <span>背景色</span>
+                  <input id="s-bg" type="color" />
+                </label>
+              </div>
+            </div>
+            <div class="card">
+              <h3>舞台元素</h3>
+              <div class="toggles">
+                <label class="switch"><input type="checkbox" id="s-subtitle" /><span>字幕</span></label>
+                <label class="switch"><input type="checkbox" id="s-clock" /><span>时间</span></label>
+                <label class="switch"><input type="checkbox" id="s-badge" /><span>AI 标识</span></label>
+                <label class="switch"><input type="checkbox" id="s-ticker" /><span>跑马灯</span></label>
+              </div>
+              <label class="field">
+                <span>跑马灯文案</span>
+                <input id="s-ticker-text" type="text" maxlength="120" />
+              </label>
+            </div>
+          </section>
+
+          <!-- ── 动作 ── -->
+          <section class="tab-panel" data-tab="motion">
+            <div class="card">
+              <h3>动作开关</h3>
+              <div class="toggles">
+                <label class="switch"><input type="checkbox" id="m-breath" /><span>呼吸</span></label>
+                <label class="switch"><input type="checkbox" id="m-blink" /><span>眨眼</span></label>
+                <label class="switch"><input type="checkbox" id="m-sway" /><span>轻摆</span></label>
+                <label class="switch"><input type="checkbox" id="m-mouth" /><span>口型</span></label>
+                <label class="switch"><input type="checkbox" id="m-head" /><span>点头</span></label>
+                <label class="switch"><input type="checkbox" id="m-gesture" /><span>说话起伏</span></label>
+              </div>
+              <label class="field">
+                <span>动作幅度 <b id="intensity-val">60%</b></span>
+                <input id="m-intensity" type="range" min="0" max="100" step="5" />
+              </label>
+              <label class="field">
+                <span>动作风格</span>
+                <select id="m-style">
+                  <option value="auto">跟随形象（推荐）</option>
+                  <option value="calm">稳重克制</option>
+                  <option value="lively">活泼夸张</option>
+                </select>
+              </label>
+            </div>
+            <div class="card">
+              <h3>口型</h3>
+              <label class="field">
+                <span>口型强度 <b id="mgain-val">60%</b></span>
+                <input id="m-gain" type="range" min="0" max="100" step="5" />
+              </label>
+              <details class="tune">
+                <summary>口型 / 眨眼对齐（照片嘴眼位置不同可微调）</summary>
+                <label class="field"><span>嘴部上沿 <b id="mi-top-val">56%</b></span><input id="mi-top" type="range" min="20" max="80" step="1" /></label>
+                <label class="field"><span>嘴部下沿 <b id="mi-bottom-val">8%</b></span><input id="mi-bottom" type="range" min="0" max="40" step="1" /></label>
+                <label class="field"><span>眼部上沿 <b id="ei-top-val">30%</b></span><input id="ei-top" type="range" min="10" max="60" step="1" /></label>
+                <label class="field"><span>眼部下沿 <b id="ei-bottom-val">54%</b></span><input id="ei-bottom" type="range" min="30" max="80" step="1" /></label>
+              </details>
+            </div>
+          </section>
+
+          <!-- ── 推流 ── -->
+          <section class="tab-panel" data-tab="stream">
+            <div class="card">
+              <h3>推流到直播平台</h3>
+              <label class="field">
+                <span>平台</span>
+                <select id="st-platform"></select>
+              </label>
+              <label class="field">
+                <span>推流地址（RTMP / SRT）</span>
+                <input id="st-url" type="text" placeholder="rtmp://live-push.example.com/live" />
+              </label>
+              <label class="field">
+                <span>推流密钥（可选）</span>
+                <input id="st-key" type="text" placeholder="stream key" />
+              </label>
+              <div class="field-row">
+                <label class="field"><span>帧率</span><input id="st-fps" type="number" min="10" max="60" step="1" /></label>
+                <label class="field">
+                  <span>分辨率</span>
+                  <select id="st-size">
+                    <option value="1080x1920">1080×1920 竖屏</option>
+                    <option value="720x1280">720×1280 竖屏</option>
+                    <option value="1920x1080">1920×1080 横屏</option>
+                    <option value="1280x720">1280×720 横屏</option>
+                  </select>
+                </label>
+              </div>
+              <label class="switch"><input type="checkbox" id="st-audio" /><span>推流带语音</span></label>
+              <div class="inline">
+                <button type="button" class="btn primary small" id="st-start">开始推流</button>
+                <button type="button" class="btn ghost small" id="st-stop">停止推流</button>
+              </div>
+              <p class="hint" id="st-status">未开始。网页直播请用顶部「一键开播」的浏览器源。</p>
+            </div>
+            <div class="card">
+              <h3>两种开播方式</h3>
+              <p class="hint"><b>浏览器源（推荐）</b>：点顶部「一键开播」，把舞台地址粘到直播伴侣 / OBS 的「浏览器」源，字幕、跑马灯、动效全都有。</p>
+              <p class="hint"><b>RTMP 直推</b>：上面填推流地址直接推，画面是纯人像 + 语音，不含网页字幕。</p>
+            </div>
+          </section>
+
+          <!-- ── 接待 ── -->
+          <section class="tab-panel" data-tab="widget">
+            <div class="card">
+              <h3>接待模式（数字人 Agent）</h3>
+              <label class="switch"><input type="checkbox" id="w-enabled" /><span>启用接待</span></label>
+              <label class="field">
+                <span>接待模式</span>
+                <select id="a-mode">
+                  <option value="live">一对多直播（所有访客随时提问）</option>
+                  <option value="solo">一对一接待（其他访客排队等待）</option>
+                  <option value="round-robin">一对多轮流接待（挨个回答）</option>
+                </select>
+              </label>
+              <div class="field-row">
+                <label class="field"><span>同时接待上限（轮流模式）</span><input id="a-max" type="number" min="1" max="20" step="1" /></label>
+                <label class="field"><span>空闲自动结束（秒）</span><input id="a-idle" type="number" min="15" max="3600" step="5" /></label>
+              </div>
+              <label class="field"><span>排队提示语（{position} 会替换成排位）</span><input id="a-queue-tip" type="text" maxlength="300" /></label>
+              <label class="field"><span>进入欢迎语</span><input id="a-welcome" type="text" maxlength="300" /></label>
+              <label class="switch"><input type="checkbox" id="a-host-llm" /><span>接入若道模型回答（无需填 API Key）</span></label>
+              <label class="switch"><input type="checkbox" id="a-speak" /><span>回答时数字人语音播报</span></label>
+            </div>
+            <div class="card">
+              <h3>接待外观与问答</h3>
+              <label class="field"><span>标题</span><input id="w-title" type="text" maxlength="40" placeholder="数字人接待" /></label>
+              <label class="field"><span>欢迎语</span><input id="w-greeting" type="text" maxlength="200" placeholder="你好，我是数字人助手" /></label>
+              <label class="field"><span>问答库（每行一条：问题|答案）</span><textarea id="w-faqs" rows="4" spellcheck="false" placeholder="怎么联系你们|你可以在这里留言"></textarea></label>
+              <label class="field"><span>知识库（每行一条，产品/政策/说明，用于检索作答）</span><textarea id="w-knowledge" rows="4" spellcheck="false" placeholder="我们支持 7 天无理由退款。&#10;全国大部分地区 48 小时发货。"></textarea></label>
+              <label class="switch"><input type="checkbox" id="w-speak-greeting" /><span>打开时播问候语音</span></label>
+            </div>
+            <div class="card">
+              <h3>智能对话（可选接大模型）</h3>
+              <label class="switch"><input type="checkbox" id="w-llm-enabled" /><span>启用大模型回答</span></label>
+              <label class="field"><span>接口地址（OpenAI 兼容，填到 /v1）</span><input id="w-llm-url" type="text" placeholder="https://api.openai.com/v1" /></label>
+              <label class="field"><span>模型名</span><input id="w-llm-model" type="text" placeholder="gpt-4o-mini / qwen-plus" /></label>
+              <label class="field"><span>API Key（只存本机）</span><input id="w-llm-key" type="password" placeholder="sk-..." /></label>
+              <label class="field"><span>人设提示词</span><textarea id="w-llm-prompt" rows="2" maxlength="600" placeholder="你是专业亲切的数字人客服…"></textarea></label>
+            </div>
+            <div class="card">
+              <h3>嵌入与数据</h3>
+              <div class="inline">
+                <button type="button" class="btn ghost small" id="w-copy">复制嵌入代码</button>
+                <button type="button" class="btn ghost small" id="w-open">预览接待</button>
+              </div>
+              <p class="hint">把嵌入代码粘到公司 / 个人产品页，右下角就会出现数字人接待浮窗。</p>
+              <p class="hint" id="w-stats">接待数据：—</p>
+            </div>
+          </section>
+
+          <!-- ── 引擎 ── -->
+          <section class="tab-panel" data-tab="engine">
+            <div class="card">
+              <h3>渲染引擎</h3>
+              <div class="engine-row">
+                <label class="radio"><input type="radio" name="engine" value="still" /><span>静态真人（零依赖，开箱即用）</span></label>
+                <label class="radio"><input type="radio" name="engine" value="local" /><span>本地开源口型（需 NVIDIA 显卡）</span></label>
+              </div>
+              <label class="field">
+                <span>本地引擎地址</span>
+                <div class="inline">
+                  <input id="e-url" type="text" placeholder="http://127.0.0.1:8090" />
+                  <button type="button" class="btn ghost small" id="e-probe">探测</button>
+                </div>
+              </label>
+              <p class="hint" id="engine-status">未探测</p>
+            </div>
+            <div class="card upgrade">
+              <h3>想要真人级口型与表情？</h3>
+              <p class="hint">「静态真人」是音频频谱驱动，近景能看出差别。两条升级路线：</p>
+              <p class="hint"><b>① 本地开源引擎</b>：有 6GB+ NVIDIA 显卡时，跑 LiveTalking / MuseTalk（真口型模型，逐帧生成），插件已内置协议对接——装好后在上面选「本地开源口型」点「探测」即可。一键预检：<code>scripts/install-engine.ps1</code></p>
+              <p class="hint"><b>② 云端数字人 API</b>：无显卡时接 HeyGen / D-ID / 腾讯智影 / 阿里百炼，照片上传后平台实时生成精确口型与表情。详细流程与接口见插件目录 README 的「真实感升级路线」章节。</p>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="dock">
+      <div class="dock-head">
+        <h2>话术库 <span class="muted" id="script-count">0 句 · 0 字</span></h2>
+        <div class="dock-actions">
+          <button type="button" class="btn ghost small" id="script-sample">加一句</button>
+          <button type="button" class="btn ghost small" id="script-clear">重置</button>
+          <button type="button" class="btn ghost small" id="dock-toggle" aria-expanded="true">收起</button>
+          <label class="switch"><input type="checkbox" id="script-auto" /><span>自动轮播</span></label>
+          <label class="inline small">
+            <span>间隔</span>
+            <input id="script-interval" type="number" min="6" max="600" step="1" /> 秒
+          </label>
+          <button type="button" class="btn primary small" id="say-next">下一句</button>
+        </div>
+      </div>
+      <textarea id="script-lines" rows="3" spellcheck="false" placeholder="每行一句，自动轮播按顺序播放"></textarea>
+    </footer>
+
+    <div class="toast" id="toast" hidden></div>
+    <div class="drop" id="drop" hidden>松开上传照片</div>
+  </div>
+  <script type="module" src="app.mjs?v=0.9.0"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+:root {
+  --accent: #7c5cff;
+  --bg: #08090f;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%; overflow: hidden; background: #000;
+  font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+}
+
+.viewport { width: 100vw; height: 100vh; display: grid; place-items: center; background: #000; }
+
+.stage {
+  position: relative;
+  width: 1080px; height: 1920px;
+  transform-origin: center center;
+  overflow: hidden;
+  background: var(--bg);
+  isolation: isolate;
+}
+
+/* 背景 */
+.bg {
+  position: absolute; inset: -6%;
+  width: 112%; height: 112%;
+  object-fit: cover;
+  object-position: center top;
+  filter: blur(58px) brightness(0.42) saturate(1.35);
+  transform: scale(1.12);
+  z-index: 0;
+  opacity: 1;
+}
+
+.vignette {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    radial-gradient(120% 70% at 50% 18%, transparent 30%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 22%, transparent 62%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.aurora {
+  position: absolute; left: -20%; right: -20%; top: -10%; height: 55%; z-index: 1;
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--accent) 42%, transparent), transparent 68%);
+  filter: blur(20px);
+  opacity: 0.55;
+  animation: drift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes drift {
+  from { transform: translate3d(-2%, 0, 0) scale(1); opacity: 0.42; }
+  to { transform: translate3d(2%, 2%, 0) scale(1.06); opacity: 0.62; }
+}
+
+/* 顶栏 */
+.topline {
+  position: absolute; top: 62px; left: 64px; right: 64px; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.identity { display: flex; align-items: center; gap: 16px; }
+.live-dot {
+  width: 16px; height: 16px; border-radius: 50%; background: #ff3b5c;
+  box-shadow: 0 0 0 0 rgba(255, 59, 92, 0.6);
+  animation: pulse 1.8s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 59, 92, 0.55); }
+  70% { box-shadow: 0 0 0 22px rgba(255, 59, 92, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 59, 92, 0); }
+}
+.identity strong {
+  font-size: 46px; font-weight: 700; letter-spacing: 1px;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+.badge {
+  font-size: 22px; padding: 8px 18px; border-radius: 999px;
+  background: rgba(124, 92, 255, 0.28);
+  border: 1px solid rgba(160, 140, 255, 0.5);
+  color: #e3dcff; backdrop-filter: blur(6px);
+}
+.clock {
+  font-size: 34px; font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, 0.78);
+  padding: 8px 20px; border-radius: 14px; background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* 人像 */
+.avatar-wrap {
+  position: absolute; inset: 0; z-index: 3;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+.av-base, .av-mouth {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: var(--avatar-fit, cover);
+  object-position: center top;
+  opacity: 1;
+  pointer-events: none;
+}
+.stage.avatar-contain {
+  background: radial-gradient(120% 70% at 50% 12%, color-mix(in srgb, var(--accent) 26%, #10121c), #07080d 68%);
+}
+.stage.avatar-contain .av-base,
+.stage.avatar-contain .av-mouth { object-position: center bottom; }
+.av-mouth { opacity: 0; }
+
+.av-mouth {
+  clip-path: inset(56% 24% 8% 24%);
+  transform-origin: 50% 76%;
+  will-change: transform;
+  opacity: 0;
+}
+.av-mouth.speaking { opacity: 1; }
+
+.rim {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.15) 72%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* 字幕 */
+.subtitle {
+  position: absolute; left: 70px; right: 70px; bottom: 214px; z-index: 6;
+  display: flex; justify-content: center;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.subtitle.on { opacity: 1; transform: translateY(0); }
+.subtitle span {
+  display: inline-block; max-width: 940px;
+  padding: 22px 34px; border-radius: 20px;
+  font-size: 40px; line-height: 1.5; font-weight: 600; letter-spacing: 0.5px;
+  text-align: center; text-wrap: balance;
+  background: rgba(10, 11, 18, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px);
+}
+
+/* 跑马灯 */
+.ticker {
+  position: absolute; left: 0; right: 0; bottom: 96px; height: 66px; z-index: 6;
+  overflow: hidden; display: flex; align-items: center;
+  background: linear-gradient(90deg, rgba(124, 92, 255, 0.22), rgba(94, 234, 212, 0.14));
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.ticker.on { opacity: 1; }
+.ticker span {
+  white-space: nowrap; font-size: 28px; color: rgba(255, 255, 255, 0.86);
+  padding-left: 100%;
+  animation: marquee 18s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* 启动闸门 */
+.gate {
+  position: absolute; inset: 0; z-index: 20;
+  display: grid; place-content: center; gap: 22px; text-align: center;
+  background: rgba(5, 6, 10, 0.72); backdrop-filter: blur(4px);
+  transition: opacity 0.4s ease;
+}
+.gate.hidden { opacity: 0; pointer-events: none; }
+/* 预览模式：只保留底部的授权按钮，不遮挡人像 */
+.gate.preview-mode {
+  place-content: end center;
+  padding: 0 24px 130px;
+  background: linear-gradient(180deg, transparent 58%, rgba(0, 0, 0, 0.58));
+  backdrop-filter: none;
+}
+.gate.preview-mode .gate-btn { font-size: 26px; padding: 16px 34px; }
+.gate.preview-mode p { font-size: 18px; }
+.gate p { font-size: 24px; color: rgba(255, 255, 255, 0.55); }
+.gate-btn {
+  font-size: 36px; padding: 26px 52px; border-radius: 999px; cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.28); color: #fff;
+  background: linear-gradient(135deg, var(--accent), #4f8cff);
+  box-shadow: 0 20px 60px rgba(124, 92, 255, 0.45);
+}
+
+.standby {
+  position: absolute; left: 50%; bottom: 300px; transform: translateX(-50%); z-index: 7;
+  font-size: 26px; color: rgba(255, 255, 255, 0.5); letter-spacing: 4px;
+  padding: 12px 26px; border-radius: 999px; background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: opacity 0.4s ease;
+}
+.standby.hidden { opacity: 0; }
+/* 布局与眨眼层 */
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.av-eyes {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  clip-path: inset(30% 20% 54% 20%);
+  transform-origin: 50% 40%;
+  will-change: transform;
+  opacity: 0;
+}
+
+/* v0.2 overrides: 动态口型/眨眼区域 + 外部源 + 抠图 */
+.av-mouth {
+  clip-path: inset(var(--mouth-top,56%) var(--mouth-right,24%) var(--mouth-bottom,8%) var(--mouth-left,24%));
+  transform-origin: 50% var(--mouth-origin,76%);
+}
+.av-eyes {
+  clip-path: inset(var(--eye-top,30%) var(--eye-right,20%) var(--eye-bottom,54%) var(--eye-left,20%));
+}
+.srcvideo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; background: #000; z-index: 1;
+}
+.srcvideo.contain { object-fit: contain; }
+.stage.cutout .bg { opacity: 0 !important; }
+.stage.cutout {
+  background: radial-gradient(120% 80% at 50% 18%, color-mix(in srgb, var(--accent) 22%, #10121c), #07080d 72%);
+}

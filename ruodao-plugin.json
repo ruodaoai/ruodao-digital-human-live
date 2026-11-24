@@ -1,0 +1,58 @@
+{
+  "id": "com.ruodao.digital-human-live",
+  "name": "数字人直播",
+  "version": "0.9.0",
+  "apiVersion": ">=0.1.0 <0.2.0",
+  "description": "传一张照片就开播的数字人：真人/卡通形象、口型与动作、1080×1920 竖屏舞台、AI 话术轮播与本地语音合成。支持 RTMP/SRT 推流、OBS/直播伴侣浏览器源，以及接入若道模型的数字人 Agent 接待：一对多直播、一对一独占接待（其余访客排队）、一对多轮流接待，可打字或语音对话。",
+  "requires": {
+    "capabilities": {
+      "required": {
+        "commands": "0.1.0",
+        "code.execute": "0.1.0"
+      }
+    }
+  },
+  "permissions": [
+    "process",
+    "network"
+  ],
+  "contributes": {
+    "services": [
+      {
+        "id": "main",
+        "title": "数字人直播常驻服务（形象库 · 语音合成 · 舞台画面 · 推流 · 接待）",
+        "description": "插件自己的 Node 进程：管理本机人像/卡通素材与配置、调用本地语音合成、向舞台页推送字幕与口播状态、探测本地口型引擎，用本机 ffmpeg 推流，并承载数字人 Agent 的访客会话、接待队列与若道模型调用。素材只写宿主 userData，服务只监听 127.0.0.1。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/live-studio.mjs",
+            "serve"
+          ],
+          "cwd": "."
+        },
+        "hostMethods": [
+          "llm.available",
+          "llm.chat"
+        ]
+      }
+    ]
+  },
+  "capabilities": [
+    "digital-human",
+    "photo-avatar",
+    "cartoon-avatar",
+    "local-tts",
+    "ai-script",
+    "live-overlay",
+    "browser-source",
+    "rtmp-push",
+    "web-widget",
+    "local-render-engine",
+    "agent-chat",
+    "visitor-queue",
+    "one-to-one-reception",
+    "round-robin-reception",
+    "ruodao-model"
+  ]
+}

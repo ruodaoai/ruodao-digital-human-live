@@ -1,0 +1,10 @@
+{
+  "port": 43211,
+  "token": "a5aeb958c3966d3394f3793a996f8acc",
+  "url": "http://127.0.0.1:43211",
+  "stageUrl": "http://127.0.0.1:43211/stage?token=a5aeb958c3966d3394f3793a996f8acc",
+  "pid": 29168,
+  "version": "0.9.0",
+  "dataDir": "D:\\ai\\code\\ruodao\\plugins\\digital-human-live\\.data",
+  "startedAt": "2026-11-18T04:08:20.246Z"
+}

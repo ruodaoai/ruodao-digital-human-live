@@ -1,0 +1,309 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e6]:
+      - heading "数字人直播" [level=1] [ref=e7]
+      - paragraph [ref=e8]:
+        - generic [ref=e9]: v0.8.0
+        - generic [ref=e10]: ·
+        - generic [ref=e11]: 缺少访问令牌
+    - generic [ref=e12]:
+      - generic [ref=e15]: 连接失败
+      - generic [ref=e16]: 语音检测中
+      - generic "配置会自动保存到本机" [ref=e17]: 已保存
+    - generic [ref=e18]:
+      - button "重试连接" [ref=e19] [cursor=pointer]
+      - button "复制浏览器源" [ref=e20] [cursor=pointer]
+      - button "打开舞台" [ref=e21] [cursor=pointer]
+      - button "一键开播" [ref=e22] [cursor=pointer]
+  - main [ref=e23]:
+    - complementary [ref=e24]:
+      - generic [ref=e25]:
+        - heading "我的形象" [level=2] [ref=e26]
+        - generic [ref=e27]: "0"
+      - generic [ref=e28]:
+        - button "真人形象" [ref=e29] [cursor=pointer]
+        - button "卡通 / 二次元" [ref=e30] [cursor=pointer]
+      - generic [ref=e31] [cursor=pointer]:
+        - generic [ref=e32]: ＋
+        - strong [ref=e33]: 上传一张人像照片
+        - generic [ref=e34]:
+          - text: 正脸、光线均匀、纯色背景最佳
+          - text: PNG / JPG / WebP，≤ 12MB
+      - paragraph [ref=e35]: 照片只保存在本机，不上传任何服务器。
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - heading "实时舞台" [level=2] [ref=e38]
+        - generic [ref=e39]: 1080 × 1920
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - iframe [ref=e43]:
+            
+          - generic [ref=e44]:
+            - generic [ref=e45]: 🖼️
+            - paragraph [ref=e46]:
+              - text: 先上传一张人像照片
+              - text: 舞台会自动生成
+            - emphasis [ref=e47]: 支持 PNG / JPG / WebP
+        - complementary "开播检查" [ref=e48]:
+          - generic [ref=e49]: 开播检查
+          - generic [ref=e50]:
+            - generic [ref=e52]: 数字人形象
+            - generic [ref=e53]: 未上传
+          - generic [ref=e54]:
+            - generic [ref=e56]: 语音合成
+            - generic [ref=e57]: 检测中
+          - generic [ref=e58]:
+            - generic [ref=e60]: 直播话术
+            - generic [ref=e61]: 0 句
+          - generic [ref=e62]:
+            - generic [ref=e64]: 推流
+            - generic [ref=e65]: 网页源
+          - generic [ref=e66]:
+            - generic [ref=e68]: 网页接待
+            - generic [ref=e69]: 未启用
+          - generic [ref=e70]: 上传一张正脸照片即可开播，其余配置会自动保存。
+      - generic [ref=e71]:
+        - button "试一句" [ref=e72] [cursor=pointer]
+        - button "停止说话" [ref=e73] [cursor=pointer]
+        - generic [ref=e74]: 待机
+        - button "刷新" [ref=e75] [cursor=pointer]
+    - complementary [ref=e76]:
+      - heading "主播设定" [level=2] [ref=e78]
+      - navigation "主播设定分区" [ref=e79]:
+        - button "主播" [ref=e80] [cursor=pointer]
+        - button "画面" [ref=e81] [cursor=pointer]
+        - button "动作" [ref=e82] [cursor=pointer]
+        - button "引擎" [ref=e83] [cursor=pointer]
+        - button "推流" [ref=e84] [cursor=pointer]
+        - button "接待" [ref=e85] [cursor=pointer]
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: 形象适配
+          - combobox "形象适配" [ref=e89]:
+            - option "智能（横图完整显示 / 竖图铺满）" [selected]
+            - option "完整显示（不裁切）"
+            - option "铺满画面（会裁切）"
+        - generic [ref=e90]:
+          - generic [ref=e91]: 主播名字
+          - textbox "主播名字" [ref=e92]:
+            - /placeholder: 小若
+        - generic [ref=e93]:
+          - generic [ref=e94]: 一句话介绍
+          - textbox "一句话介绍" [ref=e95]:
+            - /placeholder: 24 小时在线的数字人直播间
+        - generic [ref=e96]:
+          - generic [ref=e97]: 声音
+          - combobox "声音" [ref=e98]
+        - generic [ref=e99]:
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - text: 语速
+              - generic [ref=e102]: "0"
+            - slider "语速 0" [ref=e103]: "0"
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - text: 音调
+              - generic [ref=e106]: "0"
+            - slider "音调 0" [ref=e107]: "0"
+        - heading "画面" [level=3] [ref=e108]
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - generic [ref=e111]: 主题色
+            - textbox "主题色" [ref=e112]: "#000000"
+          - generic [ref=e113]:
+            - generic [ref=e114]: 背景色
+            - textbox "背景色" [ref=e115]: "#000000"
+        - generic [ref=e116]:
+          - generic [ref=e117] [cursor=pointer]:
+            - checkbox "字幕" [ref=e118]
+            - generic [ref=e119]: 字幕
+          - generic [ref=e120] [cursor=pointer]:
+            - checkbox "时间" [ref=e121]
+            - generic [ref=e122]: 时间
+          - generic [ref=e123] [cursor=pointer]:
+            - checkbox "AI 标识" [ref=e124]
+            - generic [ref=e125]: AI 标识
+          - generic [ref=e126] [cursor=pointer]:
+            - checkbox "跑马灯" [ref=e127]
+            - generic [ref=e128]: 跑马灯
+        - generic [ref=e129]:
+          - generic [ref=e130]: 跑马灯文案
+          - textbox "跑马灯文案" [ref=e131]
+        - heading "动作" [level=3] [ref=e132]
+        - generic [ref=e133]:
+          - generic [ref=e134] [cursor=pointer]:
+            - checkbox "呼吸" [ref=e135]
+            - generic [ref=e136]: 呼吸
+          - generic [ref=e137] [cursor=pointer]:
+            - checkbox "眨眼" [ref=e138]
+            - generic [ref=e139]: 眨眼
+          - generic [ref=e140] [cursor=pointer]:
+            - checkbox "轻摆" [ref=e141]
+            - generic [ref=e142]: 轻摆
+          - generic [ref=e143] [cursor=pointer]:
+            - checkbox "口型" [ref=e144]
+            - generic [ref=e145]: 口型
+          - generic [ref=e146] [cursor=pointer]:
+            - checkbox "点头" [ref=e147]
+            - generic [ref=e148]: 点头
+          - generic [ref=e149] [cursor=pointer]:
+            - checkbox "说话起伏" [ref=e150]
+            - generic [ref=e151]: 说话起伏
+        - generic [ref=e152]:
+          - generic [ref=e153]:
+            - text: 动作幅度
+            - generic [ref=e154]: 60%
+          - slider "动作幅度 60%" [ref=e155]: "50"
+        - generic [ref=e156]:
+          - generic [ref=e157]: 动作风格
+          - combobox "动作风格" [ref=e158]:
+            - option "跟随形象（推荐）" [selected]
+            - option "稳重克制"
+            - option "活泼夸张"
+        - generic [ref=e159]:
+          - generic [ref=e160]:
+            - text: 口型强度
+            - generic [ref=e161]: 60%
+          - slider "口型强度 60%" [ref=e162]: "50"
+        - group [ref=e163]:
+          - generic "口型 / 眨眼对齐（照片嘴眼位置不同可微调）" [ref=e164] [cursor=pointer]
+        - heading "渲染引擎" [level=3] [ref=e165]
+        - generic [ref=e166]:
+          - generic [ref=e167] [cursor=pointer]:
+            - radio "静态真人（零依赖）" [ref=e168]
+            - generic [ref=e169]: 静态真人（零依赖）
+          - generic [ref=e170] [cursor=pointer]:
+            - radio "本地开源口型" [ref=e171]
+            - generic [ref=e172]: 本地开源口型
+        - generic [ref=e173]:
+          - generic [ref=e174]: 本地引擎地址
+          - generic [ref=e175]:
+            - textbox "本地引擎地址 探测" [ref=e176]:
+              - /placeholder: http://127.0.0.1:8090
+            - button "探测" [ref=e177] [cursor=pointer]
+        - paragraph [ref=e178]: 未探测
+        - paragraph
+        - heading "推流到直播平台" [level=3] [ref=e179]
+        - generic [ref=e180]:
+          - generic [ref=e181]: 平台
+          - combobox "平台" [ref=e182]
+        - generic [ref=e183]:
+          - generic [ref=e184]: 推流地址（RTMP / SRT）
+          - textbox "推流地址（RTMP / SRT）" [ref=e185]:
+            - /placeholder: rtmp://live-push.example.com/live
+        - generic [ref=e186]:
+          - generic [ref=e187]: 推流密钥（可选）
+          - textbox "推流密钥（可选）" [ref=e188]:
+            - /placeholder: stream key
+        - generic [ref=e189]:
+          - generic [ref=e190]:
+            - generic [ref=e191]: 帧率
+            - spinbutton "帧率" [ref=e192]
+          - generic [ref=e193]:
+            - generic [ref=e194]: 分辨率
+            - combobox "分辨率" [ref=e195]:
+              - option "1080×1920 竖屏" [selected]
+              - option "720×1280 竖屏"
+              - option "1920×1080 横屏"
+              - option "1280×720 横屏"
+        - generic [ref=e196] [cursor=pointer]:
+          - checkbox "推流带语音" [ref=e197]
+          - generic [ref=e198]: 推流带语音
+        - generic [ref=e199]:
+          - button "开始推流" [ref=e200] [cursor=pointer]
+          - button "停止推流" [ref=e201] [cursor=pointer]
+        - paragraph [ref=e202]: 未开始。网页直播请用顶部「一键开播」的浏览器源。
+        - heading "数字人 Agent · 接待" [level=3] [ref=e203]
+        - generic [ref=e204] [cursor=pointer]:
+          - checkbox "启用接待" [ref=e205]
+          - generic [ref=e206]: 启用接待
+        - generic [ref=e207]:
+          - generic [ref=e208]: 接待模式
+          - combobox "接待模式" [ref=e209]:
+            - option "一对多直播（所有访客随时提问）" [selected]
+            - option "一对一接待（其他访客排队等待）"
+            - option "一对多轮流接待（挨个回答）"
+        - generic [ref=e210]:
+          - generic [ref=e211]:
+            - generic [ref=e212]: 同时接待上限（轮流模式）
+            - spinbutton "同时接待上限（轮流模式）" [ref=e213]
+          - generic [ref=e214]:
+            - generic [ref=e215]: 空闲自动结束（秒）
+            - spinbutton "空闲自动结束（秒）" [ref=e216]
+        - generic [ref=e217]:
+          - generic [ref=e218]: "排队提示语（{position} 会替换成排位）"
+          - 'textbox "排队提示语（{position} 会替换成排位）" [ref=e219]'
+        - generic [ref=e220]:
+          - generic [ref=e221]: 进入欢迎语
+          - textbox "进入欢迎语" [ref=e222]
+        - generic [ref=e223] [cursor=pointer]:
+          - checkbox "接入若道模型回答（无需填 API Key）" [ref=e224]
+          - generic [ref=e225]: 接入若道模型回答（无需填 API Key）
+        - generic [ref=e226] [cursor=pointer]:
+          - checkbox "回答时数字人语音播报" [ref=e227]
+          - generic [ref=e228]: 回答时数字人语音播报
+        - paragraph [ref=e229]: 一对一模式下其他访客能看到排队位次，接待结束或空闲超时后自动接待下一位；轮流模式会在多位访客之间轮转，回答串行生成，不会互相打断。
+        - heading "接待外观与问答" [level=3] [ref=e230]
+        - generic [ref=e231]:
+          - generic [ref=e232]: 标题
+          - textbox "标题" [ref=e233]:
+            - /placeholder: 数字人接待
+        - generic [ref=e234]:
+          - generic [ref=e235]: 欢迎语
+          - textbox "欢迎语" [ref=e236]:
+            - /placeholder: 你好，我是数字人助手
+        - generic [ref=e237]:
+          - generic [ref=e238]: 问答库（每行一条：问题|答案）
+          - textbox "问答库（每行一条：问题|答案）" [ref=e239]:
+            - /placeholder: 怎么联系你们|你可以在这里留言
+        - generic [ref=e240]:
+          - generic [ref=e241]: 知识库（每行一条，产品/政策/说明，用于检索作答）
+          - textbox "知识库（每行一条，产品/政策/说明，用于检索作答）" [ref=e242]:
+            - /placeholder: "我们支持 7 天无理由退款。\n全国大部分地区 48 小时发货。"
+        - generic [ref=e243] [cursor=pointer]:
+          - checkbox "打开时播问候语音" [ref=e244]
+          - generic [ref=e245]: 打开时播问候语音
+        - heading "智能对话（可选接大模型）" [level=3] [ref=e246]
+        - generic [ref=e247] [cursor=pointer]:
+          - checkbox "启用大模型回答" [ref=e248]
+          - generic [ref=e249]: 启用大模型回答
+        - generic [ref=e250]:
+          - generic [ref=e251]: 接口地址（OpenAI 兼容，填到 /v1）
+          - textbox "接口地址（OpenAI 兼容，填到 /v1）" [ref=e252]:
+            - /placeholder: https://api.openai.com/v1
+        - generic [ref=e253]:
+          - generic [ref=e254]: 模型名
+          - textbox "模型名" [ref=e255]:
+            - /placeholder: gpt-4o-mini / qwen-plus
+        - generic [ref=e256]:
+          - generic [ref=e257]: API Key（只存本机）
+          - textbox "API Key（只存本机）" [ref=e258]:
+            - /placeholder: sk-...
+        - generic [ref=e259]:
+          - generic [ref=e260]: 人设提示词
+          - textbox "人设提示词" [ref=e261]:
+            - /placeholder: 你是专业亲切的数字人客服…
+        - generic [ref=e262]:
+          - button "复制嵌入代码" [ref=e263] [cursor=pointer]
+          - button "预览接待" [ref=e264] [cursor=pointer]
+        - paragraph [ref=e265]: 把嵌入代码粘到公司 / 个人产品页，右下角就会出现数字人接待浮窗。
+        - paragraph [ref=e266]: 接待数据：—
+  - contentinfo [ref=e267]:
+    - generic [ref=e268]:
+      - heading "话术库 0 句 · 0 字" [level=2] [ref=e269]:
+        - text: 话术库
+        - generic [ref=e270]: 0 句 · 0 字
+      - generic [ref=e271]:
+        - button "加一句" [ref=e272] [cursor=pointer]
+        - button "重置" [ref=e273] [cursor=pointer]
+        - button "收起" [expanded] [ref=e274] [cursor=pointer]
+        - generic [ref=e275] [cursor=pointer]:
+          - checkbox "自动轮播" [ref=e276]
+          - generic [ref=e277]: 自动轮播
+        - generic [ref=e278]:
+          - generic [ref=e279]: 间隔
+          - spinbutton "间隔 秒" [ref=e280]
+          - text: 秒
+        - button "下一句" [ref=e281] [cursor=pointer]
+    - textbox "每行一句，自动轮播按顺序播放" [ref=e282]
+  - generic [ref=e283]: 缺少访问令牌

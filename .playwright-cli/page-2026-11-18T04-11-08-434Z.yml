@@ -1,0 +1,152 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e6]:
+      - heading "数字人直播" [level=1] [ref=e7]
+      - paragraph [ref=e8]:
+        - generic [ref=e9]: v0.9.0
+        - generic [ref=e10]: ·
+        - generic [ref=e11]: 独立模式
+    - generic [ref=e12]:
+      - generic [ref=e15]: 服务正常
+      - generic [ref=e16]: 语音检测中
+      - generic "配置会自动保存到本机" [ref=e17]: 已保存
+    - generic [ref=e18]:
+      - button "复制浏览器源" [ref=e19] [cursor=pointer]
+      - button "打开舞台" [ref=e20] [cursor=pointer]
+      - button "一键开播" [ref=e21] [cursor=pointer]
+  - navigation "开播流程" [ref=e22]:
+    - button "1 上传形象 还没上传照片" [ref=e23] [cursor=pointer]:
+      - generic [ref=e24]: "1"
+      - generic [ref=e25]:
+        - generic [ref=e26]: 上传形象
+        - generic [ref=e27]: 还没上传照片
+    - button "2 选择声音 检测中" [ref=e29] [cursor=pointer]:
+      - generic [ref=e30]: "2"
+      - generic [ref=e31]:
+        - generic [ref=e32]: 选择声音
+        - generic [ref=e33]: 检测中
+    - button "3 准备话术 0 句" [ref=e35] [cursor=pointer]:
+      - generic [ref=e36]: "3"
+      - generic [ref=e37]:
+        - generic [ref=e38]: 准备话术
+        - generic [ref=e39]: 0 句
+    - button "4 开播 浏览器源 / 推流" [ref=e41] [cursor=pointer]:
+      - generic [ref=e42]: "4"
+      - generic [ref=e43]:
+        - generic [ref=e44]: 开播
+        - generic [ref=e45]: 浏览器源 / 推流
+  - main [ref=e46]:
+    - complementary [ref=e47]:
+      - generic [ref=e48]:
+        - heading "我的形象" [level=2] [ref=e49]
+        - generic [ref=e50]: "0"
+      - generic [ref=e51]:
+        - button "真人形象" [ref=e52] [cursor=pointer]
+        - button "卡通 / 二次元" [ref=e53] [cursor=pointer]
+      - generic [ref=e54] [cursor=pointer]:
+        - generic [ref=e55]: ＋
+        - strong [ref=e56]: 上传一张人像照片
+        - generic [ref=e57]:
+          - text: 正脸、光线均匀、纯色背景最佳
+          - text: PNG / JPG / WebP，≤ 12MB
+      - paragraph [ref=e58]: 照片只保存在本机，不上传任何服务器。
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - heading "实时舞台" [level=2] [ref=e61]
+        - generic [ref=e62]: 1080 × 1920
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - iframe [ref=e66]:
+            
+          - generic [ref=e67]:
+            - generic [ref=e68]: 🖼️
+            - paragraph [ref=e69]:
+              - text: 先上传一张人像照片
+              - text: 舞台会自动生成
+            - emphasis [ref=e70]: 支持 PNG / JPG / WebP
+        - complementary "开播检查" [ref=e71]:
+          - generic [ref=e72]: 开播检查
+          - generic [ref=e73]:
+            - generic [ref=e75]: 数字人形象
+            - generic [ref=e76]: 未上传
+          - generic [ref=e77]:
+            - generic [ref=e79]: 语音合成
+            - generic [ref=e80]: 检测中
+          - generic [ref=e81]:
+            - generic [ref=e83]: 直播话术
+            - generic [ref=e84]: 0 句
+          - generic [ref=e85]:
+            - generic [ref=e87]: 推流
+            - generic [ref=e88]: 网页源
+          - generic [ref=e89]:
+            - generic [ref=e91]: 网页接待
+            - generic [ref=e92]: 未启用
+          - generic [ref=e93]: 上传一张正脸照片即可开播，其余配置会自动保存。
+      - generic [ref=e94]:
+        - button "试一句" [ref=e95] [cursor=pointer]
+        - button "停止说话" [ref=e96] [cursor=pointer]
+        - generic [ref=e97]: 待机
+        - button "刷新" [ref=e98] [cursor=pointer]
+    - complementary [ref=e99]:
+      - generic [ref=e100]:
+        - heading "主播设定" [level=2] [ref=e101]
+        - generic [ref=e102]: 自动保存
+      - navigation "主播设定分区" [ref=e103]:
+        - button "🎙️ 主播" [ref=e104] [cursor=pointer]
+        - button "🎨 画面" [ref=e105] [cursor=pointer]
+        - button "🕺 动作" [ref=e106] [cursor=pointer]
+        - button "📡 推流" [ref=e107] [cursor=pointer]
+        - button "💬 接待" [ref=e108] [cursor=pointer]
+        - button "⚙️ 引擎" [ref=e109] [cursor=pointer]
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - heading "形象信息" [level=3] [ref=e113]
+          - generic [ref=e114]:
+            - generic [ref=e115]: 形象适配
+            - combobox "形象适配" [ref=e116]:
+              - option "智能（横图完整显示 / 竖图铺满）" [selected]
+              - option "完整显示（不裁切）"
+              - option "铺满画面（会裁切）"
+          - generic [ref=e117]:
+            - generic [ref=e118]: 主播名字
+            - textbox "主播名字" [ref=e119]:
+              - /placeholder: 小若
+          - generic [ref=e120]:
+            - generic [ref=e121]: 一句话介绍
+            - textbox "一句话介绍" [ref=e122]:
+              - /placeholder: 24 小时在线的数字人直播间
+        - generic [ref=e123]:
+          - heading "声音" [level=3] [ref=e124]
+          - generic [ref=e125]:
+            - generic [ref=e126]: 音色
+            - combobox "音色" [ref=e127]
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]:
+                - text: 语速
+                - generic [ref=e131]: "0"
+              - slider "语速 0" [ref=e132]: "0"
+            - generic [ref=e133]:
+              - generic [ref=e134]:
+                - text: 音调
+                - generic [ref=e135]: "0"
+              - slider "音调 0" [ref=e136]: "0"
+          - paragraph
+  - contentinfo [ref=e137]:
+    - generic [ref=e138]:
+      - heading "话术库 0 句 · 0 字" [level=2] [ref=e139]:
+        - text: 话术库
+        - generic [ref=e140]: 0 句 · 0 字
+      - generic [ref=e141]:
+        - button "加一句" [ref=e142] [cursor=pointer]
+        - button "重置" [ref=e143] [cursor=pointer]
+        - button "收起" [expanded] [ref=e144] [cursor=pointer]
+        - generic [ref=e145] [cursor=pointer]:
+          - checkbox "自动轮播" [ref=e146]
+          - generic [ref=e147]: 自动轮播
+        - generic [ref=e148]:
+          - generic [ref=e149]: 间隔
+          - spinbutton "间隔 秒" [ref=e150]
+          - text: 秒
+        - button "下一句" [ref=e151] [cursor=pointer]
+    - textbox "每行一句，自动轮播按顺序播放" [ref=e152]
